@@ -2,11 +2,13 @@ package com.example.a126308.p05_ndpsongs;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by 126308 on 19/5/2017.
@@ -30,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createNoteTableSql = "CREATE TABLE " + TABLE_SONG + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_TITLE + " TEXT," + COLUMN_SINGERS + "TEXT," + COLUMN_YEAR + "INTEGER," + COLUMN_STARS + "INTEGERS" + ")";
+                + COLUMN_TITLE + " TEXT," + COLUMN_SINGERS + " TEXT," + COLUMN_YEAR + " INTEGER," + COLUMN_STARS + " INTEGERS" + ")";
         db.execSQL(createNoteTableSql);
         Log.i("info", "created tables");
 
@@ -63,6 +65,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Log.d("SQL Insert" ," " + result); //id returned, shouldn’t be -1
         return result;
+    }
+
+    public ArrayList<String>  getAllSongTitle() {
+        ArrayList<String> songs = new ArrayList<String>();
+
+        String selectQuery = "SELECT " + COLUMN_ID + ","
+                + COLUMN_TITLE + " FROM " + TABLE_SONG;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String content = cursor.getString(1);
+                songs.add("ID:" + id + ", " + content);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return songs;
     }
 
 

@@ -32,7 +32,6 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 aa.notifyDataSetChanged();
             }
         });

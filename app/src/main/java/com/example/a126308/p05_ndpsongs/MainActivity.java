@@ -3,7 +3,9 @@ package com.example.a126308.p05_ndpsongs;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnInsert, btnShow;
     RadioGroup rgStars;
     ArrayList<String> al;
+    ArrayAdapter aa;
 
 
     @Override
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 int yearData = Integer.parseInt(year);
 
                 int stars = getStars();
-
+                
                 DBHelper dbh = new DBHelper(MainActivity.this);
                 long row_affected = dbh.insertSongTitle(titleData, singerData, yearData, stars);
                 dbh.close();
@@ -66,12 +69,30 @@ public class MainActivity extends AppCompatActivity {
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
 
+                al.clear();
+                al.addAll(dbh.getAllSongTitle());
+                dbh.close();
+
+                String txt = "";
+                for (int i = 0; i< al.size(); i++){
+                    String tmp = al.get(i);
+                    txt += tmp + "\n";
+                }
+
                 Intent i = new Intent(MainActivity.this, ShowActivity.class);
-                startActivity(i);
+                startActivityForResult(i, 9);
             }
         });
     }
 
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 9){
+            btnShow.performClick();
+        }
+    }
     private int getStars() {
         int stars = 1;
         switch (rgStars.getCheckedRadioButtonId()) {
