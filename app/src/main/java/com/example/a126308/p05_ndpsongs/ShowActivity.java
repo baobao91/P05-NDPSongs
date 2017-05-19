@@ -16,7 +16,7 @@ public class ShowActivity extends AppCompatActivity {
 
     ListView lv;
     Button btn;
-    ArrayList<String> al;
+    ArrayList<String> al;//mala
     ArrayAdapter aa;
 
     @Override
