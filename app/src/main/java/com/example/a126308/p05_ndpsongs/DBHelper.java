@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_YEAR = "year";
     private static final String COLUMN_STARS = "stars";
 
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -86,6 +87,44 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return songs;
     }
+
+    //To perform UPDATE
+    public int updateSong(Song data){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_TITLE, data.getTitle());
+        values.put(COLUMN_SINGERS, data.getSingers());
+        values.put(COLUMN_YEAR, data.getYears());
+        values.put(COLUMN_STARS, data.getStars());
+
+
+        //Substituted by a String
+        String condition = COLUMN_ID + "= ?";
+        String[] args = {String.valueOf(data.getId())};
+        //To check if a record is updated successfully.
+        int result = db.update(TABLE_SONG, values, condition, args);
+        db.close();
+        return result;
+    }
+
+    //To perform DELETE
+    public int deleteSong(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String condition = COLUMN_ID + "= ?";
+        String[] args = {String.valueOf(id)};
+        int result = db.delete(TABLE_SONG, condition, args);
+        db.close();
+        return result;
+    }
+
+
+
+
+
+
+
+
 
 
 
