@@ -11,7 +11,7 @@ public class Song implements Serializable {
     private int id, years, stars;
     private String title, singers;
 
-    public Song(int id, int years, int stars, String title, String singers) {
+    public Song(int id, String title) {
         this.id = id;
         this.years = years;
         this.stars = stars;
