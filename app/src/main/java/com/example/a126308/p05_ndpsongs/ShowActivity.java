@@ -45,7 +45,10 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int
                     position, long identity) {
+
+
                 Intent i = new Intent();
+
                 String data = al.get(position);
                 String id = data.split(",")[0].split(":")[1];
                 String content = data.split(",")[1].trim();
@@ -53,6 +56,8 @@ public class ShowActivity extends AppCompatActivity {
                 Song target = new Song(Integer.parseInt(id), content);
                 i.putExtra("data", target);
                 startActivityForResult(i, 9);
+
+
 
 
             }
