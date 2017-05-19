@@ -51,12 +51,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public long insertSongTitle(String title, String singers, int year) {
+    public long insertSongTitle(String title, String singers, int year, int stars) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_SINGERS, singers);
-//        values.put(COLUMN_STARS, stars);
+        values.put(COLUMN_STARS, stars);
         values.put(COLUMN_YEAR, year);
         long result = db.insert(TABLE_SONG, null, values);
         db.close();
@@ -64,6 +64,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("SQL Insert" ," " + result); //id returned, shouldn’t be -1
         return result;
     }
+
+
 
 
 
