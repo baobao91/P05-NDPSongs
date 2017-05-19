@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnInsert = (Button) findViewById(R.id.buttonInsert);
         btnShow = (Button) findViewById(R.id.buttonShow);
 
-        rgStars = (RadioGroup)findViewById(R.id.rgStars);
+        rgStars = (RadioGroup)findViewById(R.id.radioGroupStars);
 
         al = new ArrayList<String>();
 
