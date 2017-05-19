@@ -34,7 +34,6 @@ public class ModifySong extends AppCompatActivity {
         rg = (RadioGroup)findViewById(R.id.rgStars3);
 
 
-
     }
 
 }
