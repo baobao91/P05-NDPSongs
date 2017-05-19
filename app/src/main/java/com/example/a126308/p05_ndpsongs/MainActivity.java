@@ -1,5 +1,6 @@
 package com.example.a126308.p05_ndpsongs;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
                 int yearData = Integer.parseInt(year);
 
+                int stars = getStars();
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
-                long row_affected = dbh.insertSongTitle(titleData, singerData, yearData);
+                long row_affected = dbh.insertSongTitle(titleData, singerData, yearData, stars);
                 dbh.close();
 
                 if (row_affected != -1){
@@ -62,7 +64,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                DBHelper dbh = new DBHelper(MainActivity.this);
+
+                Intent i = new Intent(MainActivity.this, ShowActivity.class);
+                startActivity(i);
             }
         });
+    }
+
+    private int getStars() {
+        int stars = 1;
+        switch (rgStars.getCheckedRadioButtonId()) {
+            case R.id.radioButton1:
+                stars = 1;
+                break;
+            case R.id.radioButton2:
+                stars = 2;
+                break;
+            case R.id.radioButton3:
+                stars = 3;
+                break;
+            case R.id.radioButton4:
+                stars = 4;
+                break;
+            case R.id.radioButton5:
+                stars = 5;
+                break;
+        }
+        return stars;
     }
 }
