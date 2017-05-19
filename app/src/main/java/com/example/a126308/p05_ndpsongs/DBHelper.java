@@ -67,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //To perform UPDATE
-    public int updateNote(Song data){
+    public int updateSong(Song data){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -85,6 +85,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+    //To perform DELETE
+    public int deleteSong(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String condition = COLUMN_ID + "= ?";
+        String[] args = {String.valueOf(id)};
+        int result = db.delete(TABLE_SONG, condition, args);
+        db.close();
+        return result;
+    }
+
+
 
 
 
