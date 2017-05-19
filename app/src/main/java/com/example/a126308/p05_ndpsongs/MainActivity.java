@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 int yearData = Integer.parseInt(year);
 
                 int stars = getStars();
-                
+
                 DBHelper dbh = new DBHelper(MainActivity.this);
                 long row_affected = dbh.insertSongTitle(titleData, singerData, yearData, stars);
                 dbh.close();
@@ -69,30 +69,24 @@ public class MainActivity extends AppCompatActivity {
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
 
-                al.clear();
-                al.addAll(dbh.getAllSongTitle());
                 dbh.close();
 
-                String txt = "";
-                for (int i = 0; i< al.size(); i++){
-                    String tmp = al.get(i);
-                    txt += tmp + "\n";
-                }
 
                 Intent i = new Intent(MainActivity.this, ShowActivity.class);
-                startActivityForResult(i, 9);
+                startActivity(i);
             }
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//    protected void onActivityResult(int requestCode, int resultCode,
+//                                    Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK && requestCode == 9){
+//            btnShow.performClick();
+//        }
+//    }
 
-        if (resultCode == RESULT_OK && requestCode == 9){
-            btnShow.performClick();
-        }
-    }
     private int getStars() {
         int stars = 1;
         switch (rgStars.getCheckedRadioButtonId()) {
