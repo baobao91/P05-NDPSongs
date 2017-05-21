@@ -50,6 +50,8 @@ public class ShowActivity extends AppCompatActivity {
 //                Song target = new Song(Integer.parseInt(id), content);
                 i.putExtra("data", data);
                 startActivityForResult(i, 9);
+
+
             }
         });
     }
@@ -65,6 +67,11 @@ public class ShowActivity extends AppCompatActivity {
             lv.setAdapter(aa);
         }
     }
+
+
+
+
+
 
 }
 
