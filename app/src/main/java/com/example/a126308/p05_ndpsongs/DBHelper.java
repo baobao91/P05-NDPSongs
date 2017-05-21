@@ -68,8 +68,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public ArrayList<String>  getAllSongTitle() {
-        ArrayList<String> songs = new ArrayList<String>();
+    public ArrayList<Song>  getAllSong() {
+        ArrayList<Song> songs = new ArrayList<Song>();
 
         String selectQuery = "SELECT " + COLUMN_ID + ","
                 + COLUMN_TITLE + " FROM " + TABLE_SONG;
@@ -79,8 +79,14 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
-                String content = cursor.getString(1);
-                songs.add("ID:" + id + ", " + content);
+                String title = cursor.getString(1);
+                String singers = cursor.getString(2);
+                int year = cursor.getInt(3);
+                int star = cursor.getInt(4);
+                Song obj = new Song(id,title,singers,year,star);
+                songs.add(obj);
+
+
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -95,13 +101,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         values.put(COLUMN_TITLE, data.getTitle());
         values.put(COLUMN_SINGERS, data.getSingers());
-        values.put(COLUMN_YEAR, data.getYears());
+        values.put(COLUMN_YEAR, data.getYear());
         values.put(COLUMN_STARS, data.getStars());
 
 
         //Substituted by a String
         String condition = COLUMN_ID + "= ?";
-        String[] args = {String.valueOf(data.getId())};
+        String[] args = {String.valueOf(data.get_id())};
         //To check if a record is updated successfully.
         int result = db.update(TABLE_SONG, values, condition, args);
         db.close();

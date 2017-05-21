@@ -12,11 +12,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import static android.R.attr.data;
+
 public class ShowActivity extends AppCompatActivity {
 
     ListView lv;
     Button btn;
-    ArrayList<String> al;//mala
+    ArrayList<Song> song;
     ArrayAdapter aa;
 
     @Override
@@ -24,45 +26,39 @@ public class ShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        lv=(ListView)findViewById(R.id.lvSong);
-        btn=(Button)findViewById(R.id.button);
-        al = new ArrayList<String>();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                aa.notifyDataSetChanged();
-            }
-        });
+        btn = (Button)findViewById(R.id.button);
 
         lv = (ListView) findViewById(R.id.lvSong);
-        aa = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, al);
+        DBHelper db = new DBHelper(ShowActivity.this);
+        song = db.getAllSong();
+
+        aa = new songArrayAdapter(this, R.layout.row, song);
         lv.setAdapter(aa);
+        aa.notifyDataSetChanged();
+        db.close();
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int
                     position, long identity) {
+                Intent i = new Intent(ShowActivity.this, ModifySong.class);
+                Song data = song.get(position);
+//                String id = data.split(",")[0].split(":")[1];
+//                String content = data.split(",")[1].trim();
 
-
-                Intent i = new Intent();
-
-                String data = al.get(position);
-                String id = data.split(",")[0].split(":")[1];
-                String content = data.split(",")[1].trim();
-
-                Song target = new Song(Integer.parseInt(id), content);
-                i.putExtra("data", target);
+//                Song target = new Song(Integer.parseInt(id), content);
+                i.putExtra("data", data);
                 startActivityForResult(i, 9);
-
-
 
 
             }
         });
     }
+
+
+
+
 
 
 }

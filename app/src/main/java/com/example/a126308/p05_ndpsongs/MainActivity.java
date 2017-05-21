@@ -68,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
-
                 dbh.close();
-
 
                 Intent i = new Intent(MainActivity.this, ShowActivity.class);
                 startActivity(i);
