@@ -1,5 +1,6 @@
 package com.example.a126308.p05_ndpsongs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -19,6 +20,8 @@ public class ModifySong extends AppCompatActivity {
     RadioGroup rg;
     Song data;
 
+    Intent i ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,16 @@ public class ModifySong extends AppCompatActivity {
         btnDelete = (Button)findViewById(R.id.btnDelete);
         btnCancel = (Button)findViewById(R.id.btnCancel);
         rg = (RadioGroup)findViewById(R.id.rgStars3);
+
+        i = getIntent();
+
+        data = (Song) i.getSerializableExtra("data");
+
+        //Get text from ShowActivity
+        tvId.setText("" + data.get_id());
+        etTitle3.setText(data.getTitle());
+        etSinger3.setText(data.getSingers());
+        etYear3.setText("" + data.getYear());
 
 
     }

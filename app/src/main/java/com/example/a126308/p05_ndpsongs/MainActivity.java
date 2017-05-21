@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup rgStars;
     ArrayList<String> al;
     ArrayAdapter aa;
+    DBHelper db;
 
 
     @Override
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         btnShow = (Button) findViewById(R.id.buttonShow);
 
         rgStars = (RadioGroup)findViewById(R.id.radioGroupStars);
+        db = new DBHelper(MainActivity.this);
 
         al = new ArrayList<String>();
 
@@ -47,28 +50,25 @@ public class MainActivity extends AppCompatActivity {
                 String titleData = etTitle.getText().toString();
                 String singerData = etSinger.getText().toString();
                 String year = etYear.getText().toString();
+                Integer intYear = Integer.parseInt(year);
 
-                int yearData = Integer.parseInt(year);
+                int selectedButtonId = rgStars.getCheckedRadioButtonId();
+                // Get the radio button object from the Id we had gotten above
+                RadioButton rb = (RadioButton) findViewById(selectedButtonId);
+                int selectedRB = Integer.parseInt(rb.getText().toString());
 
-                int stars = getStars();
 
-                DBHelper dbh = new DBHelper(MainActivity.this);
-                long row_affected = dbh.insertSongTitle(titleData, singerData, yearData, stars);
-                dbh.close();
+                db.insertSongTitle(titleData,singerData,intYear,selectedRB);
+                Toast.makeText(MainActivity.this,"Insert Successful", Toast.LENGTH_LONG).show();
+                db.close();
 
-                if (row_affected != -1){
-                    Toast.makeText(MainActivity.this, "Insert successful",
-                            Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DBHelper dbh = new DBHelper(MainActivity.this);
-                dbh.close();
 
                 Intent i = new Intent(MainActivity.this, ShowActivity.class);
                 startActivity(i);
@@ -85,25 +85,5 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-    private int getStars() {
-        int stars = 1;
-        switch (rgStars.getCheckedRadioButtonId()) {
-            case R.id.radioButton1:
-                stars = 1;
-                break;
-            case R.id.radioButton2:
-                stars = 2;
-                break;
-            case R.id.radioButton3:
-                stars = 3;
-                break;
-            case R.id.radioButton4:
-                stars = 4;
-                break;
-            case R.id.radioButton5:
-                stars = 5;
-                break;
-        }
-        return stars;
-    }
+
 }

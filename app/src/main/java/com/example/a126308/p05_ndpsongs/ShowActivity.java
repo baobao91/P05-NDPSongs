@@ -50,16 +50,21 @@ public class ShowActivity extends AppCompatActivity {
 //                Song target = new Song(Integer.parseInt(id), content);
                 i.putExtra("data", data);
                 startActivityForResult(i, 9);
-
-
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-
-
-
+        if (resultCode == RESULT_OK && requestCode == 9 ) {
+            DBHelper db = new DBHelper(ShowActivity.this);
+            song = db.getAllSong();
+            aa = new songArrayAdapter(ShowActivity.this, R.layout.row, song);
+            lv.setAdapter(aa);
+        }
+    }
 
 }
 
